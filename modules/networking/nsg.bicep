@@ -6,7 +6,12 @@
 param location string
 
 @description('Base name prefix for resources')
+@minLength(1)
+@maxLength(67)
 param namePrefix string
+
+@description('Address prefix of the AzureBastionSubnet')
+param bastionSubnetPrefix string = '10.0.0.0/26'
 
 @description('Tags to apply to all resources')
 param tags object = {}
@@ -27,7 +32,7 @@ resource nsgVms 'Microsoft.Network/networkSecurityGroups@2024-01-01' = {
           protocol: 'Tcp'
           sourcePortRange: '*'
           destinationPortRange: '22'
-          sourceAddressPrefix: '10.0.0.0/26' // AzureBastionSubnet CIDR
+          sourceAddressPrefix: bastionSubnetPrefix
           destinationAddressPrefix: '*'
         }
       }
