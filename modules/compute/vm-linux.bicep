@@ -11,8 +11,8 @@ param namePrefix string
 @description('Resource ID of the subnet for the VM NIC')
 param subnetId string
 
-@description('VM size (B1s is free-tier eligible)')
-param vmSize string = 'Standard_B1s'
+@description('VM size (B2ats_v2: 2 vCPUs, 1GB RAM — low cost burstable)')
+param vmSize string = 'Standard_B2ats_v2'
 
 @description('Admin username for the VM')
 param adminUsername string = 'azureadmin'

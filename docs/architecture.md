@@ -22,30 +22,30 @@ of AZ-104 exam topics. Every component maps directly to an exam domain.
     │                    Azure Subscription                           │
     │                                                                 │
     │  ┌───────────────────────────────────────────────────────────┐  │
-    │  │              rg-lab-dev-eus-001 (East US)                 │  │
+    │  │              rg-lab-dev-cac-001 (Canada Central)                 │  │
     │  │                                                           │  │
     │  │  ┌─────────────────────────────────────────────────────┐  │  │
-    │  │  │          vnet-lab-dev-eus-001 (10.0.0.0/16)         │  │  │
+    │  │  │          vnet-lab-dev-cac-001 (10.0.0.0/16)         │  │  │
     │  │  │                                                     │  │  │
     │  │  │  ┌──────────────────┐  ┌─────────────────────────┐  │  │  │
-    │  │  │  │ AzureBastionSnet │  │   snet-vms-dev-eus-001  │  │  │  │
+    │  │  │  │ AzureBastionSnet │  │   snet-vms-dev-cac-001  │  │  │  │
     │  │  │  │   10.0.0.0/26    │  │      10.0.1.0/24        │  │  │  │
     │  │  │  │  ┌────────────┐  │  │  ┌───────────────────┐  │  │  │  │
-    │  │  │  │  │  Bastion    │──│──│─▶│  vm-lab-dev-eus   │  │  │  │  │
+    │  │  │  │  │  Bastion    │──│──│─▶│  vm-lab-dev-cac   │  │  │  │  │
     │  │  │  │  │  (Basic)    │  │  │  │  Ubuntu 22.04     │  │  │  │  │
-    │  │  │  │  └────────────┘  │  │  │  B1s / SSH key     │  │  │  │  │
+    │  │  │  │  └────────────┘  │  │  │  B2ats_v2 / SSH  │  │  │  │  │
     │  │  │  └──────────────────┘  │  └───────────────────┘  │  │  │  │
     │  │  │                        │  nsg-vms: Bastion→22    │  │  │  │
     │  │  │                        └─────────────────────────┘  │  │  │
     │  │  │  ┌─────────────────────────────┐                    │  │  │
-    │  │  │  │  snet-services-dev-eus-001  │                    │  │  │
+    │  │  │  │  snet-services-dev-cac-001  │                    │  │  │
     │  │  │  │       10.0.2.0/24           │                    │  │  │
     │  │  │  │  nsg-services: VNet only    │                    │  │  │
     │  │  │  └─────────────────────────────┘                    │  │  │
     │  │  └─────────────────────────────────────────────────────┘  │  │
     │  │                                                           │  │
     │  │  ┌──────────────────┐  ┌──────────────────────────────┐   │  │
-    │  │  │ stlabdeveus001   │  │ law-lab-dev-eus-001          │   │  │
+    │  │  │ stlabdevcac001   │  │ law-lab-dev-cac-001          │   │  │
     │  │  │ StorageV2 / LRS  │  │ Log Analytics (30d)          │   │  │
     │  │  │ Boot diagnostics │  │ Azure Monitor Agent          │   │  │
     │  │  └──────────────────┘  └──────────────────────────────┘   │  │
@@ -58,27 +58,27 @@ of AZ-104 exam topics. Every component maps directly to an exam domain.
 
 ### Networking Layer
 
-**VNet (vnet-lab-dev-eus-001):** Single virtual network with /16 address space providing
+**VNet (vnet-lab-dev-cac-001):** Single virtual network with /16 address space providing
 network isolation. Three subnets separate concerns: Bastion access, VM workloads, and
 backend services.
 
 **NSGs:** Explicit deny-all rules with specific allow exceptions. The VMs NSG only allows
 SSH from the Bastion subnet. The Services NSG allows intra-VNet traffic only.
 
-**Azure Bastion (bas-lab-dev-eus-001):** Provides browser-based SSH access to VMs without
+**Azure Bastion (bas-lab-dev-cac-001):** Provides browser-based SSH access to VMs without
 exposing public IPs. Basic SKU keeps costs low while covering exam topics.
 
 ### Compute Layer
 
-**Linux VM (vm-lab-dev-eus-001):** Ubuntu 22.04 LTS on B1s (free-tier eligible). SSH key
+**Linux VM (vm-lab-dev-cac-001):** Ubuntu 22.04 LTS on B2ats_v2 (2 vCPUs, 1GB RAM, burstable). SSH key
 authentication only — no passwords. Azure Monitor Agent extension installed for monitoring.
 
 ### Management Layer
 
-**Storage Account (stlabdeveus001):** Standard LRS with a blob container for exercises.
+**Storage Account (stlabdevcac001):** Standard LRS with a blob container for exercises.
 Used for VM boot diagnostics. TLS 1.2 enforced, public blob access disabled.
 
-**Log Analytics (law-lab-dev-eus-001):** Centralized log collection with 30-day retention
+**Log Analytics (law-lab-dev-cac-001):** Centralized log collection with 30-day retention
 (free tier). Receives VM metrics via Azure Monitor Agent.
 
 **RBAC:** Three role assignments demonstrate least-privilege access patterns:
@@ -94,21 +94,21 @@ Pattern: `{resource-type}-{workload}-{environment}-{region}-{instance}`
 |--------------|-------------|
 | `lab`        | Workload    |
 | `dev`        | Environment |
-| `eus`        | East US     |
+| `cac`        | Canada Central |
 | `001`        | Instance    |
 
-Exception: Storage accounts don't allow hyphens → `stlabdeveus001`
+Exception: Storage accounts don't allow hyphens → `stlabdevcac001`
 
 ## Cost Estimate
 
 | Resource        | SKU/Tier          | Estimated Monthly Cost |
 |-----------------|-------------------|----------------------|
-| VM (B1s)        | Free tier eligible| ~$0 (or ~$7.59)     |
+| VM (B2ats_v2) | Burstable         | ~$6/mo               |
 | Bastion Basic   | Basic             | ~$140/mo while active|
 | Storage (LRS)   | Standard          | ~$0.50               |
 | Log Analytics   | 30d free tier     | ~$0                  |
 | Public IP       | Standard (static) | ~$3.65               |
-| **Total**       |                   | **~$4-$152/mo**      |
+| **Total**       |                   | **~$10-$150/mo**     |
 
 > **Cost tip:** Bastion is the main cost driver. Delete it when not in use and redeploy
 > when needed. Alternatively, remove the Bastion module and use SSH with a public IP + NSG
@@ -118,4 +118,4 @@ Exception: Storage accounts don't allow hyphens → `stlabdeveus001`
 
 Delete everything with one command:
 
-    az group delete --name rg-lab-dev-eus-001 --yes --no-wait
+    az group delete --name rg-lab-dev-cac-001 --yes --no-wait

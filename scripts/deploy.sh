@@ -14,8 +14,8 @@
 set -euo pipefail
 
 # --- Configuration ---
-RESOURCE_GROUP="rg-lab-dev-eus-001"
-LOCATION="eastus"
+RESOURCE_GROUP="rg-lab-dev-cac-001"
+LOCATION="canadacentral"
 TEMPLATE_FILE="main.bicep"
 PARAMS_FILE="main.bicepparam"
 
@@ -92,10 +92,10 @@ az deployment group show \
 echo ""
 log_info "=== Next Steps ==="
 echo "  1. Connect to VM via Bastion:"
-echo "     az network bastion ssh --name bas-lab-dev-eus-001 --resource-group ${RESOURCE_GROUP} --target-resource-id <vm-resource-id> --auth-type ssh-key --username azureadmin --ssh-key ~/.ssh/id_ed25519"
+echo "     az network bastion ssh --name bas-lab-dev-cac-001 --resource-group ${RESOURCE_GROUP} --target-resource-id <vm-resource-id> --auth-type ssh-key --username azureadmin --ssh-key ~/.ssh/id_ed25519"
 echo ""
 echo "  2. Or connect via Azure Portal:"
-echo "     Portal > Virtual Machines > vm-lab-dev-eus-001 > Connect > Bastion"
+echo "     Portal > Virtual Machines > vm-lab-dev-cac-001 > Connect > Bastion"
 echo ""
 echo "  3. To destroy all resources when done:"
 echo "     az group delete --name ${RESOURCE_GROUP} --yes --no-wait"

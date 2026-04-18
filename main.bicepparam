@@ -4,11 +4,11 @@
 
 using './main.bicep'
 
-param location = 'eastus'
+param location = 'canadacentral'
 param environment = 'dev'
 param workloadName = 'lab'
-param regionAbbreviation = 'eus'
-param storageAccountName = 'stlabdeveus001'
+param regionAbbreviation = 'cac'
+param storageAccountName = 'stlabdevcac001'
 
 // REQUIRED: Replace with your SSH public key
 // Generate one with: ssh-keygen -t ed25519 -C "az104-lab"

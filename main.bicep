@@ -4,12 +4,12 @@
 //
 // Usage:
 //   az deployment group create \
-//     --resource-group rg-lab-dev-eus-001 \
+//     --resource-group rg-lab-dev-cac-001 \
 //     --template-file main.bicep \
 //     --parameters main.bicepparam
 
 @description('Azure region for all resources')
-param location string = 'eastus'
+param location string = 'canadacentral'
 
 @description('Environment name (dev, staging, prod)')
 @allowed(['dev', 'staging', 'prod'])
@@ -19,14 +19,14 @@ param environment string = 'dev'
 param workloadName string = 'lab'
 
 @description('Region abbreviation for naming')
-param regionAbbreviation string = 'eus'
+param regionAbbreviation string = 'cac'
 
 @description('SSH public key for VM authentication')
 @secure()
 param sshPublicKey string
 
 @description('Globally unique storage account name')
-param storageAccountName string = 'stlabdeveus001'
+param storageAccountName string = 'stlabdevcac001'
 
 @description('Principal ID for Contributor role (leave empty to skip)')
 param contributorPrincipalId string = ''
