@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "Labs/az-104"
+		},
+		{
+			"path": "Labs/Ansible"
+		},
+		{
+			"path": "Labs/ansiblebook"
+		}
+	],
+	"settings": {}
+}
